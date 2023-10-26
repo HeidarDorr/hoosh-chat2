@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT</title>
+    <link rel="stylesheet" href="./style/output.css">
+    <link rel="stylesheet" href="./style/base.css">
+    <link rel="stylesheet" href="./style/app.css">
+    <script src="./scripts/app.js" defer type="module"></script>
+    <script src="./scripts/chat.js" defer type="module"></script>
+
+    <!-- highlight.js for development code zone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/ir-black.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body class="dark">
+    <div class="overflow-hidden w-full h-full relative">
+        <div class="flex flex-1 flex-col md:pl-[260px] h-screen">
+            <main class="relative h-full w-full flex flex-col overflow-hidden items-stretch flex-1">
+                <div class="h-full max-md:pt-[2.7rem]"></div>
+
+
+                <!-- guide box -->
+                <div id="guide-box" class="min-h-screen dark:bg-[var(--dark-bg-color)] flex flex-col items-center">
+                    <div class="text-gray-800 md:h-full md:flex md:flex-col md:items-center px-6 dark:text-gray-100">
+                        <h1
+                            class="text-4xl font-semibold text-center mt-14 lg:mt-[15vh] ml-auto mr-auto mb-9 flex gap-2 items-center justify-center">
+                            Guide
+                        </h1>
+                        <div
+                            class="md:flex max-w-md text-center flex-col bg-[#fff0f0] dark:bg-[#232534] rounded-xl p-5 py-7">
+                            <p class="mb-9 text-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                Accusantium esse, impedit atque asperiores odit veniam magni adipisci, doloribus sequi
+                                delectus minus eaque dicta? Eligendi aliquid illo similique corporis. Ullam, excepturi.
+                            </p>
+                            <div class="flex flex-col gap-3.5">
+                                <h2 class="flex gap-3 items-center m-auto text-lg font-normal md:flex-col md:gap-2 ">
+                                    <svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24"
+                                        stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" height="1rem"
+                                        width="1rem" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="5"></circle>
+                                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                    </svg>
+                                    Examples
+                                </h2>
+                                <ul id="examples-box" class="flex flex-col gap-3.5 w-full m-auto">
+                                    <button
+                                        class="w-full bg-white dark:bg-white/5 p-3 rounded-md hover:bg-[#ffd7d7] dark:hover:bg-[rgb(81,81,92)]">
+                                        "Explain quantum computing in simple terms" →
+                                    </button>
+                                    <button
+                                        class="w-full bg-white dark:bg-white/5 p-3 rounded-md hover:bg-[#ffd7d7] dark:hover:bg-[rgb(81,81,92)]">
+                                        "Got any creative ideas for a 10 year old’s birthday?" →
+                                    </button>
+                                    <button
+                                        class="w-full bg-white dark:bg-white/5 p-3 rounded-md hover:bg-[#ffd7d7] dark:hover:bg-[rgb(81,81,92)]">
+                                        "How do I make an HTTP request in Javascript?" →
+                                    </button>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end of guide -->
+
+
+                <!-- chats -->
+                <div class="h-full flex-1 overflow-hidden min-h-screen">
+                    <div class="h-full overflow-y-auto overflow-x-hidden dark:bg-[--dark-bg-color]">
+                        <div class="flex flex-col items-center text-sm dark:bg-[--dark-bg-color] ">
+                            <div
+                                class="w-full border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-gray-100 group bg-gray-50 dark:bg-[#444654]">
+
+                                <div id="chat"></div>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-[--dark-bg-color] h-32 md:h-44 w-full"></div>
+                    </div>
+                </div>
+                <!-- end of chats -->
+
+
+                <!-- new continue box -->
+                <div id="new-continue-box" style="bottom: -100px; transition: .6s;"
+                    class="absolute  md:-left-1 left-0 w-[calc(100%-5px)] max-md:w-full max-md:bg-white max-md:border-t dark:max-md:bg-[--dark-bg-color] dark:max-md:border-white/20">
+                    <div
+                        class="lg:max-w-[41.5rem] gap-4 md:gap-5 m-auto p-3 md:pt-8 md:pb-5 lg:px-0 flex justify-center max-md:justify-between">
+                        <a href="chat.html"
+                            class="py-2 grow rounded-[.18rem] bg-[--green-clr] hover:bg-[--green-clr-hover] text-white text-lg text-center">
+                            <button id="new-chat-btn">
+                                New Chat
+                            </button>
+                        </a>
+                        <button id="continue-btn"
+                            class="py-2 grow rounded-[.18rem] bg-blue-600 hover:bg-blue-700 text-white text-lg">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+                <!-- end of new continue box -->
+
+
+                <!-- input -->
+                <div id="input-container" style="transition: .6s;"
+                    class="absolute  bottom-0 md:-left-1 left-0 w-[calc(100%-5px)] max-md:w-full  border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent bg-white dark:bg-[var(--dark-bg-color)] md:!bg-transparent">
+                    <form id="form"
+                        class="mx-2 flex flex-row gap-3 pt-2 last:mb-2 md:last:mb-6 lg:mx-auto lg:max-w-[47.8rem] lg:pt-6 relative">
+                        <div id="regenerate-btn" style="transition: .6s;"
+                            class="flex items-center md:items-end absolute right-0 -top-7 max-lg:-top-11 max-md:hidden">
+                            <div style="opacity: 1;">
+                                <button
+                                    class="relative -z-0 whitespace-nowrap border-0 md:border dark:md:border-gray-600 p-2 px-3 bg-white dark:bg-[--dark-bg-color] dark:text-gray-100 rounded-md hover:bg-gray-100 dark:hover:bg-[--dark-bg-color-hover]">
+                                    <div class="flex w-full gap-2 items-center justify-center text-sm">
+                                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
+                                            stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 icon-xs"
+                                            height=".9rem" width=".9rem" xmlns="http://www.w3.org/2000/svg">
+                                            <polyline points="1 4 1 10 7 10"></polyline>
+                                            <polyline points="23 20 23 14 17 14"></polyline>
+                                            <path
+                                                d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15">
+                                            </path>
+                                        </svg>
+                                        Regenerate
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <button
+                            class="border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-[rgb(64,65,79)] shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)] w-12 h-12 rounded-lg flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" id="mdi-record-circle-outline" width="20"
+                                height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                            </svg>
+                        </button>
+                        <div
+                            class="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-[rgb(64,65,79)] rounded-lg shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
+
+                            <textarea id="input" style="height: auto; max-height: 200px;"
+                                class="m-0 w-full resize-none border-0 bg-transparent p-0 pl-2 pr-7 max-md:pt-[.09rem] focus:ring-0 focus-visible:ring-0 focus-visible:outline-0 dark:bg-transparent md:pl-0"
+                                rows="1" cols="1" placeholder="Ask anything..."></textarea>
+
+                            <button type="submit" id="submit-btn"
+                                class="absolute p-1 rounded-md text-gray-500 bottom-1.5 max-md:bottom-2.5 right-1 md:bottom-[.7rem] md:right-2 hover:bg-gray-100 dark:hover:text-gray-400 dark:hover:bg-[--dark-bg-color] disabled:hover:bg-transparent dark:disabled:hover:bg-transparent">
+                                <svg id="submit-icon" stroke="currentColor" fill="none" stroke-width="2"
+                                    viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"
+                                    class="h-4 w-4 mr-1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                                <div id="waiting-circles" style="display: none;"
+                                    class="absolute bottom-[.7rem] gap-[.2rem] right-2">
+                                    <i class="w-1 h-1 rounded-[1px] bg-gray-500 dark:bg-gray-100"></i>
+                                    <i class="w-1 h-1 rounded-[1px] bg-gray-500 dark:bg-gray-100"></i>
+                                    <i class="w-1 h-1 rounded-[1px] bg-gray-500 dark:bg-gray-100"></i>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="md:hidden flex items-center justify-center w-8 mr-1 dark:text-gray-100">
+                            <button class="relative -z-0 whitespace-nowrap border-0">
+                                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
+                                    stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 icon-sm"
+                                    height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg">
+                                    <polyline points="1 4 1 10 7 10"></polyline>
+                                    <polyline points="23 20 23 14 17 14"></polyline>
+                                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!-- end of input -->
+            </main>
+        </div>
+    </div>
+
+
+    <!-- navbar for mobile -->
+    <div
+        class="fixed w-full top-0 flex items-center border-b border-white/20 bg-[--dark-bg-color] pl-1 pt-1 text-gray-200 sm:pl-3 md:hidden">
+        <button type="button" id="open-sidebar-btn"
+            class="-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:hover:text-white">
+            <span class="sr-only">Open sidebar</span>
+            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true" class="icon-lg" height="1.5rem" width="1.5rem"
+                xmlns="http://www.w3.org/2000/svg">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <h1 class="flex-1 text-center text-base font-normal translate-y-[-1px]">[Chat name]</h1>
+        <button type="button" class="px-3 translate-y-[-1px]">
+            <a href="chat.html">
+                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+                    stroke-linejoin="round" class="icon-lg" height="1.5rem" width="1.5rem"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </a>
+        </button>
+    </div>
+    <!-- end of navbar for mobile -->
+
+
+    <!-- sidebar -->
+    <div id="overlay" style="display: none; opacity: 0;"
+        class="fixed inset-0 bg-gray-600 bg-opacity-75 transition duration-300 md:!hidden"></div>
+    <div id="sidebar"
+        class="fixed inset-0 flex w-full max-md:max-w-xs md:w-[260px] flex-col bg-[--sidebar-clr] transition duration-300 -translate-x-full md:translate-x-0">
+        <div class="absolute right-0 top-0 -mr-12 pt-2 opacity-100">
+            <button id="close-sidebar-btn" type="button" style="display: none; opacity: 0;"
+                class="ml-1 p-[10px] md:!hidden items-center justify-center focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition duration-300 cursor-pointer rounded-md"
+                tabindex="0">
+                <span class="sr-only">Close sidebar</span>
+                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+                    stroke-linejoin="round" class="icon-lg text-white" aria-hidden="true" height="1.5rem" width="1.5rem"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="relative h-full w-full flex-1 items-start border-white/20">
+            <nav class="flex h-full w-full flex-col p-2" aria-label="Chat history">
+                <div class="mb-5 flex flex-row gap-2">
+                    <a href="chat.html"
+                        class="flex px-3 min-h-[44px] py-1 items-center gap-3 transition-colors duration-200 text-white cursor-pointer text-sm rounded-md border border-white/20 hover:bg-gray-500/10 h-11 bg-transparent flex-grow overflow-hidden">
+                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
+                            stroke-linecap="round" stroke-linejoin="round" class="icon-sm shrink-0" height="1.3rem"
+                            width="1.3rem" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <span class="truncate">New Chat</span>
+                    </a>
+                </div>
+                <div class="flex-col flex-1 transition-opacity duration-500 -mr-2 pr-2 overflow-y-auto">
+                    <!-- place of chat history -->
+                    <div class="flex flex-col gap-2 pb-2 text-gray-100 text-sm">
+                        <div class="relative h-auto opacity-100">
+                            <a
+                                class="flex p-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group transition-none">
+                                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
+                                    stroke-linecap="round" stroke-linejoin="round" class="icon-sm" height="1rem"
+                                    width="1rem" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
+                                    </path>
+                                </svg>
+                                <div class="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+                                    تفاوت Vue و Nuxt Loremmmmmmmmmmmmmmmmmmmmmmmmm
+                                    <div
+                                        class="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-[--sidebar-clr] group-hover:from-[#2A2B32]">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2 pb-2 text-gray-100 text-sm">
+                        <div class="relative h-auto opacity-100">
+                            <a
+                                class="flex p-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group transition-none">
+                                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
+                                    stroke-linecap="round" stroke-linejoin="round" class="icon-sm" height="1rem"
+                                    width="1rem" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
+                                    </path>
+                                </svg>
+                                <div class="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+                                    حافظ خلوت نشین دوش به میخانه شد از سر پیمان گذشت بر سر پیمانه شد
+                                    <div
+                                        class="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-[--sidebar-clr] group-hover:from-[#2A2B32]">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- end of place of chat history -->
+                </div>
+                <div class="border-t pt-2 border-white/20">
+                    <div class="flex w-full items-center">
+                        <div class="grow">
+                            <div class="group relative">
+                                <button
+                                    class="flex w-full items-center gap-3 rounded-md p-3 text-sm transition-colors duration-200 hover:bg-[--dark-bg-color]"
+                                    type="button">
+                                    <div class="flex-shrink-0">
+                                        <div class="flex items-center justify-center rounded">
+                                            <div class="relative flex">
+                                                <img alt="User" loading="lazy" width="32" height="32" class="rounded-sm"
+                                                    style="color: transparent;" src="assets/user.webp">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="grow overflow-hidden text-ellipsis whitespace-nowrap text-left text-white">
+                                        <div class="font-semibold">[Name of User]</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="theme-btn"
+                        class="text-gray-100 py-3 px-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 w-full cursor-pointer text-sm ">
+                        <div class="flex items-center gap-3 dark:hidden">
+                            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1rem"
+                                width="1rem" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                            <span>Dark mode</span>
+                        </div>
+                        <div class="hidden items-center gap-3 dark:flex">
+                            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1rem"
+                                width="1rem" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <span>Light mode</span>
+                        </div>
+                    </button>
+                    <a href="login.html"
+                        class="text-gray-100 flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 cursor-pointer text-sm">
+                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
+                            stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1rem" width="1rem"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Log out
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- end of sidebar -->
+
+
+    <!-- advertise modal -->
+    <div id="modal" class="modal-delay fixed -bottom-full inset-0 flex items-center justify-center z-50 hidden">
+        <div id="modal-overlay" class="bg-gray-700/70 w-full h-full absolute"></div>
+        <div
+            class="bg-white mx-auto p-5 flex max-w-[90%] min-w-[10rem] min-h-[6rem] items-center justify-center text-center rounded-md shadow-lg relative">
+
+            <div id="reward-timer"
+                class="absolute top-[-2.12rem] right-[-.2rem] p-[.4rem] px-3 pr-8 rounded-full bg-white text-xs transition">Reward in 5 seconds</div>
+            <button id="reward-btn"
+                class="absolute -top-8 flex p-[2px] items-end justify-center rounded-full bg-white right-0 text-gray-300 pointer-events-none"
+                style="box-shadow: 0 0 4px #444;" onclick="closeModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+        </div>
+    </div>
+    <!-- end of advertise modal -->
+</body>
+
+</html>
